@@ -2,12 +2,12 @@
 
 There is no real goal behind this project. Just out of my curiosity what if:
 
-  - one launches Docker image (debian, alpine, etc)
-  - installs linux kernel & init system (systemd, OpenRC, etc)
-  - dumps container's directory structure to some disk image
-  - installs bootloader (syslinux) to this image...
+  - launch a base Linux container (debian, alpine, etc)
+  - pull in Linux kernel & init system (systemd, OpenRC, etc)
+  - dump container's filesystem to a disk image
+  - install bootloader (syslinux) to this image...
 
-Then it should be probably possible to launch a ~~real~~ virtual machine with such a disk image!
+Then it should be probably possible to launch a ~~real~~ virtual machine with such an image!
 
 Try it out:
 
@@ -23,5 +23,4 @@ make clean
 
 It works!
 
-Check `Makefile` content for implementation details.
-
+Check out `Makefile` for more details or read my article on <a href="https://micromind.me/en/abuse-docker-to-create-bootable-linux-disk-image/">micromind.me</a>.
