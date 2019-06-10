@@ -8,6 +8,9 @@ REPO=docker-to-linux
 debian: debian.img
 
 .PHONY:
+ubuntu: ubuntu.img
+
+.PHONY:
 alpine: alpine.img
 
 .PHONY:
@@ -17,6 +20,14 @@ debian.tar:
 .PHONY:
 debian.img:
 	@make DISTR="debian" linux.img
+
+.PHONY:
+ubuntu.tar:
+	@make DISTR="ubuntu" linux.tar
+
+.PHONY:
+ubuntu.img:
+	@make DISTR="ubuntu" linux.img
 
 .PHONY:
 alpine.tar:
@@ -52,6 +63,13 @@ builder:
 		docker build -f Dockerfile -t ${REPO}/builder .;\
 	fi
 
+.PHONY:
+builder-interactive:
+	docker run -it \
+		-v `pwd`:/os:rw \
+		--cap-add SYS_ADMIN \
+		--device /dev/loop0 \
+		${REPO}/builder bash
 
 .PHONY:
 clean: clean-docker-procs clean-docker-images
