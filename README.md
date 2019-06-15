@@ -23,4 +23,4 @@ make clean
 
 It works!
 
-Check out `Makefile` for more details or read my article on <a href="https://micromind.me/en/abuse-docker-to-create-bootable-linux-disk-image/">micromind.me</a>.
+Check out `Makefile` for more details or read my article on <a href="https://iximiuz.com/en/posts/from-docker-container-to-bootable-linux-disk-image/">iximiuz.com</a>.
