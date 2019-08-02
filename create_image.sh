@@ -1,5 +1,5 @@
 #!/bin/bash
-
+LOOPDEVICE=$1
 set -e
 
 echo -e "[Create disk image]"
@@ -10,12 +10,12 @@ sfdisk /os/linux.img < /os/partition.txt
 
 echo -e "\n[Format partition with ext3]"
 losetup -D
-losetup -o $(expr 512 \* 2048) /dev/loop0 /os/linux.img
-mkfs.ext3 /dev/loop0
+losetup -o $(expr 512 \* 2048) $LOOPDEVICE /os/linux.img
+mkfs.ext3 $LOOPDEVICE
 
 echo -e "\n[Copy linux directory structure to partition]"
 mkdir -p /os/mnt
-mount -t auto /dev/loop0 /os/mnt/
+mount -t auto $LOOPDEVICE /os/mnt/
 cp -R /os/linux.dir/. /os/mnt/
 
 echo -e "\n[Setup extlinux]"
