@@ -1,8 +1,10 @@
 COL_RED="\033[0;31m"
 COL_GRN="\033[0;32m"
 COL_END="\033[0m"
+LOOPDEVICE=$(shell losetup -f)
 
 REPO=docker-to-linux
+
 
 .PHONY:
 debian: debian.img
@@ -27,6 +29,7 @@ ubuntu.tar:
 
 .PHONY:
 ubuntu.img:
+	@echo $(LOOPDEVICE)
 	@make DISTR="ubuntu" linux.img
 
 .PHONY:
@@ -53,8 +56,8 @@ linux.img: builder linux.dir
 		-v `pwd`:/os:rw \
 		-e DISTR=${DISTR} \
 		--cap-add SYS_ADMIN \
-		--device /dev/loop0 \
-		${REPO}/builder bash /os/create_image.sh
+		--device $(LOOPDEVICE) \
+		${REPO}/builder bash /os/create_image.sh $(LOOPDEVICE)
 
 .PHONY:
 builder:
@@ -68,7 +71,7 @@ builder-interactive:
 	docker run -it \
 		-v `pwd`:/os:rw \
 		--cap-add SYS_ADMIN \
-		--device /dev/loop0 \
+		--device $(LOOPDEVICE) \
 		${REPO}/builder bash
 
 .PHONY:
