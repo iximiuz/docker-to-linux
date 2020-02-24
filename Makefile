@@ -55,6 +55,7 @@ linux.img: builder linux.dir
 	docker run -it \
 		-v `pwd`:/os:rw \
 		-e DISTR=${DISTR} \
+		--privileged \
 		--cap-add SYS_ADMIN \
 		--device $(LOOPDEVICE) \
 		${REPO}/builder bash /os/create_image.sh $(LOOPDEVICE)
