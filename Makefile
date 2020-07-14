@@ -1,7 +1,16 @@
 COL_RED="\033[0;31m"
 COL_GRN="\033[0;32m"
 COL_END="\033[0m"
-LOOPDEVICE=$(shell losetup -f)
+
+UNAME_S := $(shell uname -s)
+LOOPDEVICE := /dev/boot0
+ifeq ($(UNAME_S),Linux)
+    LOOPDEVICE := $(shell losetup -f)
+endif
+ifeq ($(UNAME_S),Darwin)
+	LOOPDEVICE := $(shell echo 'losetup -f' |\
+    	docker run -i --rm --privileged --pid=host justincormack/nsenter1)
+endif
 
 REPO=docker-to-linux
 
@@ -14,6 +23,9 @@ ubuntu: ubuntu.img
 
 .PHONY:
 alpine: alpine.img
+
+.PHONY:
+raspbian: raspbian.img
 
 .PHONY:
 debian.tar:
@@ -40,6 +52,14 @@ alpine.tar:
 alpine.img:
 	@make DISTR="alpine" linux.img
 
+.PHONY:
+raspbian.tar:
+	@make DISTR="raspbian" linux.tar
+
+.PHONY:
+raspbian.img:
+	@make DISTR="raspbian" linux.img
+
 linux.tar:
 	@echo ${COL_GRN}"[Dump ${DISTR} directory structure to tar archive]"${COL_END}
 	docker build -f ${DISTR}/Dockerfile -t ${REPO}/${DISTR} .
@@ -48,11 +68,11 @@ linux.tar:
 linux.dir: linux.tar
 	@echo ${COL_GRN}"[Extract ${DISTR} tar archive]"${COL_END}
 	mkdir linux.dir
-	tar -xvf linux.tar -C linux.dir
+	tar -xvf linux.tar -C linux.dir || echo "Ignoring tar error"
 
 linux.img: builder linux.dir
 	@echo ${COL_GRN}"[Create ${DISTR} disk image]"${COL_END}
-	docker run -it \
+	docker run \
 		-v `pwd`:/os:rw \
 		-e DISTR=${DISTR} \
 		--privileged \
