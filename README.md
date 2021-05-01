@@ -14,13 +14,13 @@ Then it should be probably possible to launch a ~~real~~ virtual machine with su
 Try it out:
 
 ```bash
-make debian
+sudo make debian
 qemu-system-x86_64 -drive file=linux.img,index=0,media=disk,format=raw
-make clean
+sudo make clean
 
-make alpine
+sudo make alpine
 qemu-system-x86_64 -drive file=linux.img,index=0,media=disk,format=raw
-make clean
+sudo make clean
 ```
 
 It works!
