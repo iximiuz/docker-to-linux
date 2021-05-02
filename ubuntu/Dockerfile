@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM amd64/ubuntu:20.04
 LABEL com.iximiuz-project="docker-to-linux"
 RUN apt-get update -y
 RUN apt-get -y install \
