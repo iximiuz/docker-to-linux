@@ -1,4 +1,4 @@
-FROM alpine:3.9.4
+FROM amd64/alpine:3.13.5
 LABEL com.iximiuz-project="docker-to-linux"
 RUN apk update
 RUN apk add openrc linux-virt
