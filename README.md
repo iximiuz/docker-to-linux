@@ -37,7 +37,7 @@ Check out `Makefile` for more details or read my article on <a href="https://ixi
 
 ## Release notes
 #### 2021-05-02
-- Fix macOS support [#10](#10) (thanks to @xavigonzalvo for reporting and suggesting the fix)
+- Fix macOS support [#10](https://github.com/iximiuz/docker-to-linux/issues/10) (thanks to @xavigonzalvo for reporting and suggesting the fix)
   - move `losetup` call from Makefile to the builder container
   - explicitly select amd64 architecture in target distr Dockerfiles to support builds on ARM hosts (_aka_ M1)
 - Upgrade target distr versions
@@ -46,10 +46,10 @@ Check out `Makefile` for more details or read my article on <a href="https://ixi
   - Alpine 3.9.4 -> 3.13.5
 
 #### 2020-02-29
-- Improve Alpine support [#7](#7) (creds @monperrus)
+- Improve Alpine support [#7](https://github.com/iximiuz/docker-to-linux/pull/7) (creds @monperrus)
 
 #### 2019-08-02
-- Fix loopback device lookup [#3](#3) (creds @christau)
+- Fix loopback device lookup [#3](https://github.com/iximiuz/docker-to-linux/pull/3) (creds @christau)
 
 #### 2019-06-03
 - Initial release
