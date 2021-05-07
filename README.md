@@ -36,6 +36,9 @@ Check out `Makefile` for more details or read my article on <a href="https://ixi
 
 
 ## Release notes
+#### 2021-05-07
+- Fix - Ubuntu 20.04 stopped working because of the changed path to vmlinuz and initrd files.
+
 #### 2021-05-02
 - Fix macOS support [#10](https://github.com/iximiuz/docker-to-linux/issues/10) (thanks to @xavigonzalvo for reporting and suggesting the fix)
   - move `losetup` call from Makefile to the builder container
