@@ -34,6 +34,15 @@ Check out `Makefile` for more details or read my article on <a href="https://ixi
 - 3 target distributives: Ubuntu 20.04, Debian Bullseye, Alpine 3.13.5
 - Build from macOS (including M1 chips) or Linux hosts
 
+## FAQ
+- Q: I'm getting an error about "read-only filesystem". How can I make it writable?
+
+  A: It's Linux default behaviour to mount the / filesystem as read-only. You can always remount it with `mount -o remount,rw /`.
+
+- Q: How can I access network from the VM / How can I SSH into the VM?
+
+  A: Networking is not configured at the moment. If you want to configure it yourself, search for TUN/TAP/bridge devices. Don't forget to open a PR if you come up with a working solution.
+
 
 ## Release notes
 #### 2021-05-07
@@ -59,7 +68,7 @@ Check out `Makefile` for more details or read my article on <a href="https://ixi
 
 ## TODO
 - add basic networking support
-- make images writable
+- make filesystem writable after boot
 - support different image formats (e.g. VirtualBox VDI)
 - support different target architectures (e.g. ARM)
 
