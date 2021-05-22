@@ -93,3 +93,10 @@ clean-docker-images:
 		echo "<noop>";\
 	fi
 
+net:
+	tunctl -t tap0 -u `whoami`
+	brctl addif docker0 tap0
+	ip link set tap0 up
+
+run-debian:
+	qemu-system-x86_64 -drive file=linux.img,index=0,media=disk,format=raw -m 4096 -netdev tap,id=mynet0,ifname=tap0,script=no,downscript=no -device e1000,netdev=mynet0,mac=52:55:00:d1:55:01
