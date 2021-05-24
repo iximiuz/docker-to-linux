@@ -45,6 +45,9 @@ Check out `Makefile` for more details or read my article on <a href="https://ixi
 
 
 ## Release notes
+#### 2021-05-24
+- Start using ext4 instead of ext3.
+
 #### 2021-05-07
 - Fix - Ubuntu 20.04 stopped working because of the changed path to vmlinuz and initrd files.
 

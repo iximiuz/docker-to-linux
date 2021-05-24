@@ -8,13 +8,13 @@ dd if=/dev/zero of=/os/linux.img bs=$(expr 1024 \* 1024 \* 1024) count=1
 echo -e "\n[Make partition]"
 sfdisk /os/linux.img < /os/partition.txt
 
-echo -e "\n[Format partition with ext3]"
+echo -e "\n[Format partition with ext4]"
 losetup -D
 
 LOOPDEVICE=$(losetup -f)
 echo -e "\n[Using ${LOOPDEVICE} loop device]"
 losetup -o $(expr 512 \* 2048) ${LOOPDEVICE} /os/linux.img
-mkfs.ext3 ${LOOPDEVICE}
+mkfs.ext4 ${LOOPDEVICE}
 
 echo -e "\n[Copy linux directory structure to partition]"
 mkdir -p /os/mnt
