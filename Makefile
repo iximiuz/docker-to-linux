@@ -3,6 +3,7 @@ COL_GRN="\033[0;32m"
 COL_END="\033[0m"
 
 REPO=docker-to-linux
+BRIDGE=`docker network inspect --format='{{json .Options}}' bridge | python -c 'import json,sys;obj=json.load(sys.stdin);print(obj["com.docker.network.bridge.name"])'`
 
 .PHONY:
 debian: debian.img
@@ -94,9 +95,9 @@ clean-docker-images:
 	fi
 
 net:
-	tunctl -t tap0 -u `whoami`
-	brctl addif docker0 tap0
+	ip tuntap add dev tap0 mod tap
+	ip link set dev tap0 master ${BRIDGE}
 	ip link set tap0 up
 
-run-debian:
+run-qemu-with-net:
 	qemu-system-x86_64 -drive file=linux.img,index=0,media=disk,format=raw -m 4096 -netdev tap,id=mynet0,ifname=tap0,script=no,downscript=no -device e1000,netdev=mynet0,mac=52:55:00:d1:55:01
