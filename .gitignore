@@ -1,3 +1,7 @@
 *.swp
 .DS_store
+*.img
+*.dir
+mnt
+*.tar
 

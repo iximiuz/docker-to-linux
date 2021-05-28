@@ -23,9 +23,12 @@ RUN apt-get -y install --no-install-recommends \
   iputils-ping \
   man \
   less \
-  curl
+  curl \
+  # bridge
+  bridge-utils
 
 COPY ./etc/. /etc/
+# COPY ./etc-bridge/. /etc/
 
 RUN echo "root:root" | chpasswd
 
