@@ -1,0 +1,11 @@
+auto br0
+iface br0 inet dhcp
+    pre-up ip tuntap add dev tap0 mode tap user root
+    pre-up ip link set tap0 up
+    bridge_ports all tap0
+    # bridge_ports eno1
+    bridge_stp off
+    bridge_maxwait 0
+    bridge_fd      0
+    post-down ip link set tap0 down
+    post-down ip tuntap del dev tap0 mode tap

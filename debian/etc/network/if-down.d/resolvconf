@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# ifdown hook script for resolvconf
+#
+# This file is part of the resolvconf package.
+#
+
+[ -x /sbin/resolvconf ] || exit 0
+
+case "$ADDRFAM" in
+  inet|inet6) :      ;;
+  *)          exit 0 ;;
+esac
+
+/sbin/resolvconf -d "${IFACE}.${ADDRFAM}" || :
+

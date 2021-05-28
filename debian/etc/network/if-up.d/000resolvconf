@@ -1,0 +1,47 @@
+#!/bin/sh
+#
+# ifup hook script for resolvconf
+#
+# This file is part of the resolvconf package.
+#
+
+[ -x /sbin/resolvconf ] || exit 0
+
+case "$ADDRFAM" in
+  inet|inet6) : ;;
+  *) exit 0 ;;
+esac
+
+R=""
+if [ "$IF_DNS_DOMAIN" ] ; then
+	R="${R}domain $IF_DNS_DOMAIN
+"
+fi
+if [ "$IF_DNS_SEARCH" ] ; then
+	R="${R}search $IF_DNS_SEARCH
+"
+fi
+if [ "$IF_DNS_SORTLIST" ] ; then
+	R="${R}sortlist $IF_DNS_SORTLIST
+"
+fi
+for NS in $IF_DNS_NAMESERVERS ; do
+	R="${R}nameserver $NS
+"
+done
+
+# Note: arguments of multiple instances of options are separated by newlines
+set_NS_to_first_arg() { NS="$1" ; }
+STANDARD_IFS="$IFS"
+IFS='
+'
+for OPT in $IF_DNS_NAMESERVER ; do
+	IFS="$STANDARD_IFS"
+	set_NS_to_first_arg $OPT
+	[ "$NS" ] && R="${R}nameserver $NS
+"
+done
+IFS="$STANDARD_IFS"
+
+echo -n "$R" | /sbin/resolvconf -a "${IFACE}.${ADDRFAM}" || :
+

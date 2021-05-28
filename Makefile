@@ -39,7 +39,7 @@ alpine.img:
 
 linux.tar:
 	@echo ${COL_GRN}"[Dump ${DISTR} directory structure to tar archive]"${COL_END}
-	docker build -f ${DISTR}/Dockerfile -t ${REPO}/${DISTR} .
+	docker build -f ${DISTR}/Dockerfile -t ${REPO}/${DISTR} ${DISTR}
 	docker export -o linux.tar `docker run -d ${REPO}/${DISTR} /bin/true`
 
 linux.dir: linux.tar
