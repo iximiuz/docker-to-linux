@@ -3,23 +3,23 @@
 set -e
 
 echo -e "[Create disk image]"
-dd if=/dev/zero of=/os/linux.img bs=$(expr 1024 \* 1024 \* 1024) count=1
+dd if=/dev/zero of=/os/${DISTR}.img bs=$(expr 1024 \* 1024 \* 1024) count=1
 
 echo -e "\n[Make partition]"
-sfdisk /os/linux.img < /os/partition.txt
+sfdisk /os/${DISTR}.img < /os/partition.txt
 
 echo -e "\n[Format partition with ext4]"
 losetup -D
 
 LOOPDEVICE=$(losetup -f)
 echo -e "\n[Using ${LOOPDEVICE} loop device]"
-losetup -o $(expr 512 \* 2048) ${LOOPDEVICE} /os/linux.img
+losetup -o $(expr 512 \* 2048) ${LOOPDEVICE} /os/${DISTR}.img
 mkfs.ext4 ${LOOPDEVICE}
 
-echo -e "\n[Copy linux directory structure to partition]"
+echo -e "\n[Copy ${DISTR} directory structure to partition]"
 mkdir -p /os/mnt
 mount -t auto ${LOOPDEVICE} /os/mnt/
-cp -R /os/linux.dir/. /os/mnt/
+cp -R /os/${DISTR}.dir/. /os/mnt/
 
 echo -e "\n[Setup extlinux]"
 extlinux --install /os/mnt/boot/
