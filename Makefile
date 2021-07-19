@@ -20,7 +20,7 @@ alpine: alpine.img
 
 %.dir: %.tar
 	@echo ${COL_GRN}"[Extract $* tar archive]"${COL_END}
-	mkdir $*.dir
+	mkdir -p $*.dir
 	tar -xvf $*.tar -C $*.dir
 
 %.img: builder %.dir
@@ -31,6 +31,7 @@ alpine: alpine.img
 		--privileged \
 		--cap-add SYS_ADMIN \
 		${REPO}/builder bash /os/create_image.sh
+	qemu-img convert -c $*.img -O qcow2 $*.qcow2
 
 .PHONY:
 builder:
@@ -49,7 +50,7 @@ builder-interactive:
 .PHONY:
 clean: clean-docker-procs clean-docker-images
 	@echo ${COL_GRN}"[Remove leftovers]"${COL_END}
-	rm -rf mnt linux.tar linux.dir linux.img linux.vdi
+	rm -rf mnt debian.* alpine.* ubuntu.*
 
 .PHONY:
 clean-docker-procs:
