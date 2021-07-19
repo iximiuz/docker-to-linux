@@ -18,9 +18,8 @@ sfdisk /os/${DISTR}.img < /os/partition.txt
 
 echo_blue "\n[Format partition with ext4]"
 losetup -D
-
 LOOPDEVICE=$(losetup -f)
-echo_blue "[Using ${LOOPDEVICE} loop device]"
+echo -e "\n[Using ${LOOPDEVICE} loop device]"
 losetup -o $(expr 512 \* 2048) ${LOOPDEVICE} /os/${DISTR}.img
 mkfs.ext4 ${LOOPDEVICE}
 
@@ -38,5 +37,5 @@ umount /os/mnt
 losetup -D
 
 echo_blue "[Write syslinux MBR]"
-dd if=/usr/lib/syslinux/mbr/mbr.bin of=/os/linux.img bs=440 count=1 conv=notrunc
+dd if=/usr/lib/syslinux/mbr/mbr.bin of=/os/${DISTR}.img bs=440 count=1 conv=notrunc
 
