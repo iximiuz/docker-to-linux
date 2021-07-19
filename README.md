@@ -19,7 +19,9 @@ Try it out:
 make debian  # or ubuntu, or alpine
 
 # 2. Run it! Use username `root` and password `root` to log in.
-qemu-system-x86_64 -drive file=linux.img,index=0,media=disk,format=raw -m 4096
+qemu-system-x86_64 -drive file=debian.img,index=0,media=disk,format=raw -m 4096
+# 2. Alternate
+qemu-system-x86_64 -hda debian.qcow2 -m 512
 
 # 3. Clean up when you are done.
 make clean
