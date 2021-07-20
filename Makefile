@@ -31,7 +31,6 @@ alpine: alpine.img
 		--privileged \
 		--cap-add SYS_ADMIN \
 		${REPO}/builder bash /os/create_image.sh
-	qemu-img convert -c $*.img -O qcow2 $*.qcow2
 
 .PHONY:
 builder:

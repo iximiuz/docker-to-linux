@@ -39,3 +39,5 @@ losetup -D
 echo_blue "[Write syslinux MBR]"
 dd if=/usr/lib/syslinux/mbr/mbr.bin of=/os/${DISTR}.img bs=440 count=1 conv=notrunc
 
+echo_blue "[Convert to qcow2]"
+qemu-img convert -c /os/${DISTR}.img -O qcow2 /os/${DISTR}.qcow2
