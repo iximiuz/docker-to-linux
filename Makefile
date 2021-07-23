@@ -13,45 +13,21 @@ ubuntu: ubuntu.img
 .PHONY:
 alpine: alpine.img
 
-.PHONY:
-debian.tar:
-	@make DISTR="debian" linux.tar
+%.tar:
+	@echo ${COL_GRN}"[Dump $* directory structure to tar archive]"${COL_END}
+	docker build -f $*/Dockerfile -t ${REPO}/$* .
+	docker export -o $*.tar `docker run -d ${REPO}/$* /bin/true`
 
-.PHONY:
-debian.img:
-	@make DISTR="debian" linux.img
+%.dir: %.tar
+	@echo ${COL_GRN}"[Extract $* tar archive]"${COL_END}
+	mkdir -p $*.dir
+	tar -xvf $*.tar -C $*.dir
 
-.PHONY:
-ubuntu.tar:
-	@make DISTR="ubuntu" linux.tar
-
-.PHONY:
-ubuntu.img:
-	@make DISTR="ubuntu" linux.img
-
-.PHONY:
-alpine.tar:
-	@make DISTR="alpine" linux.tar
-
-.PHONY:
-alpine.img:
-	@make DISTR="alpine" linux.img
-
-linux.tar:
-	@echo ${COL_GRN}"[Dump ${DISTR} directory structure to tar archive]"${COL_END}
-	docker build -f ${DISTR}/Dockerfile -t ${REPO}/${DISTR} .
-	docker export -o linux.tar `docker run -d ${REPO}/${DISTR} /bin/true`
-
-linux.dir: linux.tar
-	@echo ${COL_GRN}"[Extract ${DISTR} tar archive]"${COL_END}
-	mkdir linux.dir
-	tar -xvf linux.tar -C linux.dir
-
-linux.img: builder linux.dir
-	@echo ${COL_GRN}"[Create ${DISTR} disk image]"${COL_END}
+%.img: builder %.dir
+	@echo ${COL_GRN}"[Create $* disk image]"${COL_END}
 	docker run -it \
 		-v `pwd`:/os:rw \
-		-e DISTR=${DISTR} \
+		-e DISTR=$* \
 		--privileged \
 		--cap-add SYS_ADMIN \
 		${REPO}/builder bash /os/create_image.sh
@@ -73,7 +49,7 @@ builder-interactive:
 .PHONY:
 clean: clean-docker-procs clean-docker-images
 	@echo ${COL_GRN}"[Remove leftovers]"${COL_END}
-	rm -rf mnt linux.tar linux.dir linux.img linux.vdi
+	rm -rf mnt debian.* alpine.* ubuntu.*
 
 .PHONY:
 clean-docker-procs:
