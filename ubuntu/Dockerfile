@@ -102,4 +102,5 @@ RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 
 COPY pulse-client.conf /root/pulse/client.conf
-COPY entrypoint.sh /usr/bin/entrypoint
+COPY entrypoint.sh /root/entrypoint.sh
+RUN chmod +x /root/entrypoint.sh
