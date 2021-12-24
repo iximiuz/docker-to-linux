@@ -15,7 +15,7 @@ alpine: alpine.img
 
 %.tar:
 	@echo ${COL_GRN}"[Dump $* directory structure to tar archive]"${COL_END}
-	docker build -f $*/Dockerfile -t ${REPO}/$* .
+	docker buildx build --platform linux/amd64 -f $*/Dockerfile -t ${REPO}/$* .
 	docker export -o $*.tar `docker run -d ${REPO}/$* /bin/true`
 
 %.dir: %.tar
@@ -37,12 +37,13 @@ alpine: alpine.img
 builder:
 	@echo ${COL_GRN}"[Ensure builder is ready]"${COL_END}
 	@if [ "`docker images -q ${REPO}/builder`" = '' ]; then\
-		docker build -f Dockerfile -t ${REPO}/builder .;\
+		docker buildx build --platform linux/amd64 -f Dockerfile -t ${REPO}/builder .;\
 	fi
 
 .PHONY:
 builder-interactive:
 	docker run -it \
+		--platform linux/amd64 \
 		-v `pwd`:/os:rw \
 		--cap-add SYS_ADMIN \
 		${REPO}/builder bash
