@@ -11,7 +11,7 @@ echo_blue() {
 }
 
 echo_blue "[Create disk image]"
-dd if=/dev/zero of=/os/${DISTR}.img bs=$(expr 1024 \* 1024 \* 1024 \* 20) count=1
+dd if=/dev/zero of=/os/${DISTR}.img bs=1024 count=$(expr 1024 \* 1024 \* 20) # 20gb
 
 echo_blue "[Make partition]"
 sfdisk /os/${DISTR}.img < /os/partition.txt
