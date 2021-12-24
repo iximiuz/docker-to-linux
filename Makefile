@@ -26,6 +26,7 @@ alpine: alpine.img
 %.img: builder %.dir
 	@echo ${COL_GRN}"[Create $* disk image]"${COL_END}
 	docker run -it \
+		--platform linux/amd64 \
 		-v `pwd`:/os:rw \
 		-e DISTR=$* \
 		--privileged \
