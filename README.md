@@ -1,7 +1,5 @@
 # docker-to-linux - make bootable Linux disk image abusing Docker
 
-**UPD:** _Two years after creating this project I clearly can see some interest in building VM images from containers and/or Dockerfiles. **If you’re aware of the real use of the docker-to-linux project, [please drop me a message and share your experience](https://twitter.com/iximiuz)**. It may help me to develop a second generation of this tool covering real-world scenarios with a more user-friendly UX. Thanks!_
-
 There is no real goal behind this project. Just out of my curiosity what if:
 
   - launch a base Linux container (debian, alpine, etc)
