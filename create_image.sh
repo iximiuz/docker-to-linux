@@ -11,7 +11,7 @@ echo_blue() {
 }
 
 echo_blue "[Create disk image]"
-dd if=/dev/zero of=/os/${DISTR}.img bs=$(expr 1024 \* 1024 \* 1024) count=1
+dd if=/dev/zero of=/os/${DISTR}.img bs=1024 count=$(expr 1024 \* 1024 \* 5) # 5gb
 
 echo_blue "[Make partition]"
 sfdisk /os/${DISTR}.img < /os/partition.txt
@@ -26,7 +26,7 @@ mkfs.ext4 ${LOOPDEVICE}
 echo_blue "[Copy ${DISTR} directory structure to partition]"
 mkdir -p /os/mnt
 mount -t auto ${LOOPDEVICE} /os/mnt/
-cp -R /os/${DISTR}.dir/. /os/mnt/
+cp -Rv /os/${DISTR}.dir/. /os/mnt/
 
 echo_blue "[Setup extlinux]"
 extlinux --install /os/mnt/boot/
