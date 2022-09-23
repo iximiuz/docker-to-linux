@@ -2,6 +2,9 @@ COL_RED="\033[0;31m"
 COL_GRN="\033[0;32m"
 COL_END="\033[0m"
 
+UID=$(shell id -u)
+GID=$(shell id -g)
+
 REPO=docker-to-linux
 
 .PHONY:
@@ -30,7 +33,7 @@ alpine: alpine.img
 		-e DISTR=$* \
 		--privileged \
 		--cap-add SYS_ADMIN \
-		${REPO}/builder bash /os/create_image.sh
+		${REPO}/builder bash /os/create_image.sh ${UID} ${GID}
 
 .PHONY:
 builder:
