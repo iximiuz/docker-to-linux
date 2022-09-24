@@ -31,6 +31,7 @@ cp -R /os/${DISTR}.dir/. /os/mnt/
 echo_blue "[Setup extlinux]"
 extlinux --install /os/mnt/boot/
 cp /os/${DISTR}/syslinux.cfg /os/mnt/boot/syslinux.cfg
+rm /os/mnt/.dockerenv
 
 echo_blue "[Unmount]"
 umount /os/mnt
