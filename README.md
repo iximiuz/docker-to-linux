@@ -71,7 +71,6 @@ Check out `Makefile` for more details or read my article on <a href="https://ixi
 
 ## TODO
 - add basic networking support
-- make filesystem writable after boot
 - support different image formats (e.g. VirtualBox VDI)
 - support different target architectures (e.g. ARM)
 
