@@ -47,3 +47,5 @@ echo_blue "[Convert to qcow2]"
 qemu-img convert -c /os/${DISTR}.img -O qcow2 /os/${DISTR}.qcow2
 
 [ "${UID_HOST}" -a "${GID_HOST}" ] && chown ${UID_HOST}:${GID_HOST} /os/${DISTR}.img /os/${DISTR}.qcow2
+
+rm -r /os/${DISTR}.dir
