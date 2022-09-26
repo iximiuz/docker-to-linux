@@ -4,6 +4,7 @@ COL_END="\033[0m"
 
 UID=$(shell id -u)
 GID=$(shell id -g)
+VM_DISK_SIZE_MB?=1024
 
 REPO=docker-to-linux
 
@@ -34,7 +35,7 @@ alpine: alpine.img
 		-e DISTR=$* \
 		--privileged \
 		--cap-add SYS_ADMIN \
-		${REPO}/builder bash /os/create_image.sh ${UID} ${GID}
+		${REPO}/builder bash /os/create_image.sh ${UID} ${GID} ${VM_DISK_SIZE_MB}
 
 .PHONY:
 builder:
