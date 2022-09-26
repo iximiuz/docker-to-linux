@@ -4,6 +4,7 @@ set -e
 
 UID_HOST=$1
 GID_HOST=$2
+VM_DISK_SIZE_MB=$3
 
 echo_blue() {
     local font_blue="\033[94m"
@@ -14,10 +15,12 @@ echo_blue() {
 }
 
 echo_blue "[Create disk image]"
-dd if=/dev/zero of=/os/${DISTR}.img bs=$(expr 1024 \* 1024 \* 1024) count=1
+[ -z "${VM_DISK_SIZE_MB}" ] && VM_DISK_SIZE_MB=1024
+VM_DISK_SIZE_SECTOR=$(expr $VM_DISK_SIZE_MB \* 1024 \* 1024 / 512)
+dd if=/dev/zero of=/os/${DISTR}.img bs=${VM_DISK_SIZE_SECTOR} count=512
 
 echo_blue "[Make partition]"
-sfdisk /os/${DISTR}.img < /os/partition.txt
+echo "type=83,bootable" | sfdisk /os/${DISTR}.img
 
 echo_blue "\n[Format partition with ext4]"
 losetup -D
