@@ -27,6 +27,13 @@ make clean
 
 It works!
 
+You can increase or decrease the size of the VM hard disk via the environment variable VM_DISK_SIZE_MB (1024 by default).  
+For example for a 3GB disk:
+
+```
+make debian VM_DISK_SIZE_MB=3072  # or ubuntu, or alpine
+```
+
 Check out `Makefile` for more details or read my article on <a href="https://iximiuz.com/en/posts/from-docker-container-to-bootable-linux-disk-image/">iximiuz.com</a>.
 
 ## Features

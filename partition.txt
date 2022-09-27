@@ -1,7 +1,0 @@
-label: dos
-label-id: 0x5d8b75fc
-device: new.img
-unit: sectors
-
-linux.img1 : start=2048, size=2095104, type=83, bootable
-
