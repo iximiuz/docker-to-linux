@@ -1,5 +1,9 @@
 # docker-to-linux - make bootable Linux disk image abusing Docker
 
+```diff
+! Support development of this project > patreon.com/iximiuz
+```
+
 There is no real goal behind this project. Just out of my curiosity what if:
 
   - launch a base Linux container (debian, alpine, etc)
