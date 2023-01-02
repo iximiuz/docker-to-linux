@@ -85,3 +85,10 @@ Check out `Makefile` for more details or read my article on <a href="https://ixi
 - support different image formats (e.g. VirtualBox VDI)
 - support different target architectures (e.g. ARM)
 
+## Similar projects
+
+...or tangential projects relying on the similar technique:
+
+- [firecracker-microvm/firecracker](https://github.com/firecracker-microvm/firecracker/blob/d2c52b882ced88be581eed4f4a804ffba5a1be86/docs/rootfs-and-kernel-setup.md) suggests a similar trick to build custom VM rootfs images.
+- [weaveworks/ignite](https://github.com/weaveworks/ignite/blob/e3766643ffa88ad1d98d0cb40043cd1f94b4632a/images/Makefile) actually uses the same technique to build Firecracker VM images.
+- [d2vm (Docker to Virtual Machine)](https://github.com/linka-cloud/d2vm) a CLI tool (written in Go) to build virtual machine images from Docker images (inspired by the docker-to-linux project).
