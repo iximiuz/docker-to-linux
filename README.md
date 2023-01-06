@@ -52,8 +52,29 @@ Check out `Makefile` for more details or read my article on <a href="https://ixi
 
 - Q: How can I access network from the VM / How can I SSH into the VM?
 
-  A: Networking is not configured at the moment. If you want to configure it yourself, search for TUN/TAP/bridge devices. Don't forget to open a PR if you come up with a working solution.
+  A: Networking is in early stages at the moment. If you want to configure it yourself, search for TUN/TAP/bridge devices.
 
+
+## Network / basic connectivity
+
+You'll need a virtual device (tun/tap) bridged with an interface such as ethernet or docker0.
+
+Follow these steps if you already have docker0:
+
+Create tap interface
+
+    tunctl -t tap0 -u `whoami`
+
+Add tap0 to bridge
+
+    brctl addif docker0 tap0
+    ip link set ens3
+
+Once you've done this you'll need to configure the interface inside the VM. Asumming your network interface is ens3.
+
+    ip addr add 172.17.0.10/16 dev ens3
+    ip link set ens3 up
+    ip route add default via 172.17.0.1
 
 ## Release notes
 #### 2021-05-24
